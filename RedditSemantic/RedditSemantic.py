@@ -52,12 +52,4 @@ if len(search_results) > 0:
          #   myfile.write(str(i) + ": " + sub.title + "\n")
           #  i = i + 1
 
-            
-    
-
-
-#for submission in subreddit.new(limit=100):
-#    print (submission.title)
-#    time = submission.created
-#    print(datetime.datetime.fromtimestamp(time))
 
