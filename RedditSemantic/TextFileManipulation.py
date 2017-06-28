@@ -6,6 +6,9 @@ class TextFileManipulation(object):
     def __init__(self, path = None):
         self.path = path 
 
+    def SetFile(self, path):
+        self.path = path
+
     def RemoveFile(self, path = None):
         filePath = path
         if path == None:
@@ -30,7 +33,7 @@ class TextFileManipulation(object):
             print("No file path defined")
             return
 
-        with open(filePath, "a") as appendFile:
+        with open(filePath, "w") as appendFile:
             appendFile.write(text + "\n")
 
     def WriteLines(self, text, path = None):
@@ -44,5 +47,6 @@ class TextFileManipulation(object):
 
         with open(filePath, "a") as appendFile:
             for line in text:
-                appendFile.write(line + "\n")
+                txt = line.encode('ascii', 'ignore').decode('ascii')
+                appendFile.write(txt + "\n")
             

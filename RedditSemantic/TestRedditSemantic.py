@@ -32,6 +32,5 @@ class Test_TestRedditSemantic(unittest.TestCase):
         self.assertEqual(new, next + timedelta(days = 2))
 
 
-
 if __name__ == '__main__':
     unittest.main()

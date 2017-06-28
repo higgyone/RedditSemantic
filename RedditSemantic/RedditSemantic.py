@@ -3,14 +3,25 @@ import time
 import datetime
 from RedditApiSecrets import RedditApiSecrets 
 from TextFileManipulation import TextFileManipulation
+from DateIterator import DateIterator
 
 outputFile = "data.txt"
 headers = []
 
 apiSecrets = RedditApiSecrets()
+di = DateIterator()
+
+# date eletion announced
+di.SetStartDateTime(2017,4,18,00)
+
+#date election ended
+di.SetEndDateTime(2017,6,9,00)
+
+
 tfm = TextFileManipulation(outputFile)
 
-tfm.RemoveFile()
+for i in range (1,53):
+    tfm.RemoveFile("data" + str(i) + ".txt")
 
 reddit = praw.Reddit(client_id= apiSecrets.GetClientId(),
                      client_secret= apiSecrets.GetClientSecret(),
@@ -22,34 +33,38 @@ subreddit = reddit.subreddit('unitedkingdom')
 
 print(subreddit.display_name)  
 print(subreddit.title)         
-print(subreddit.description)
-
-start_dt = datetime.datetime(year=2017, month=4, day=18, hour=11).timetuple()
-end_dt = datetime.datetime(year=2017, month=4, day=18, hour=20).timetuple()
-
-s_t = time.mktime(start_dt)
-e_t = time.mktime(end_dt)
-
-search_str = "timestamp:" + str(int(s_t)) + ".." + str(int(e_t))
-
-search_results = list(subreddit.search(search_str, syntax='cloudsearch', limit=None))
 
 i = 1
 
-if len(search_results) > 0:
+while di.previousDateTime < di.endDateTime:
+    print("Start: %s/%s/%s %s:%s:%s - end: %s/%s/%s %s:%s:%s" %(
+        di.previousDateTime.day, di.previousDateTime.month, di.previousDateTime.year, \
+        di.previousDateTime.hour, di.previousDateTime.minute, di.previousDateTime.second,\
+        di.nextDateTime.day, di.nextDateTime.month, di.nextDateTime.year, \
+        di.nextDateTime.hour, di.nextDateTime.minute, di.nextDateTime.second))
+    
+    prev,next = di.GetCurrentOneDayEpoch()
 
-    for sub in search_results:
-        headers.append(str(i) + ": " + sub.title)
-        i +=1
-    tfm.WriteLine("Test")
+    search_str = "timestamp:" + str(int(prev)) + ".." + str(int(next))
+
+    print(search_str)
+
+    search_results = list(subreddit.search(search_str, syntax='cloudsearch', limit=None))
+
+    tfm.SetFile("data" + str(i) + ".txt")
+
+    if len(search_results) > 0:
+        print(len(search_results))
+        for sub in search_results:
+            headers.append(sub.title)
+            
+    if len(search_results) > 999:
+        print("********999*******")
+
     tfm.WriteLines(headers)
 
-    #with open(outputFile, "a") as myfile:
-     #   for sub in search_results:
-      #      print(str(i) + ": " + sub.title)
-       #     date = datetime.datetime.fromtimestamp(sub.created_utc)
-        #    print(date)
-         #   myfile.write(str(i) + ": " + sub.title + "\n")
-          #  i = i + 1
+    headers.clear()
 
+    i +=1
 
+    di.IncreaseOneDay()
