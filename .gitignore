@@ -286,6 +286,8 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+# project ignore files
 /RedditSemantic/RedditApiSecrets.py
 /RedditSemantic/data.txt
 /RedditSemantic/data9.txt
