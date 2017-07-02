@@ -5,7 +5,6 @@ from RedditApiSecrets import RedditApiSecrets
 from TextFileManipulation import TextFileManipulation
 from DateIterator import DateIterator
 
-outputFile = "data.txt"
 headers = []
 
 apiSecrets = RedditApiSecrets()
@@ -18,10 +17,10 @@ di.SetStartDateTime(2017,4,18,00)
 di.SetEndDateTime(2017,6,9,00)
 
 
-tfm = TextFileManipulation(outputFile)
+tfm = TextFileManipulation()
 
 for i in range (1,53):
-    tfm.RemoveFile("data" + str(i) + ".txt")
+    tfm.RemoveFile("data\\data" + str(i) + ".txt")
 
 reddit = praw.Reddit(client_id= apiSecrets.GetClientId(),
                      client_secret= apiSecrets.GetClientSecret(),
@@ -51,7 +50,7 @@ while di.previousDateTime < di.endDateTime:
 
     search_results = list(subreddit.search(search_str, syntax='cloudsearch', limit=None))
 
-    tfm.SetFile("data" + str(i) + ".txt")
+    tfm.SetFile("data\\data" + str(i) + ".txt")
 
     if len(search_results) > 0:
         print(len(search_results))

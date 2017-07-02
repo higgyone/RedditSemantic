@@ -48,3 +48,6 @@ class DateIterator(object):
     def GetCurrentStartEndDateTime(self):
         """get the previous and next datetimes"""
         return self.previousDateTime, self.nextDateTime
+
+if __name__ == "__main__":
+    print("This class cannot be run directly")

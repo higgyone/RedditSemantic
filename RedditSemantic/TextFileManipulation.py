@@ -49,4 +49,20 @@ class TextFileManipulation(object):
             for line in text:
                 txt = line.encode('ascii', 'ignore').decode('ascii')
                 appendFile.write(txt + "\n")
+
+    def WriteDictLines(self, dict, path = None):
+        filePath = path
+        if path == None:
+            filePath = self.path
+
+        if filePath == None:
+            print("No file path defined")
+            return
+
+        with open(filePath, "w") as writeFile:
+            for key, value in dict.items():
+                writeFile.write(str(key) + ":" + str(value) + "\n")
+
+if __name__ == "__main__":
+    print("This class cannot be run directly")
             

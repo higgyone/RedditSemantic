@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="TestRedditSemantic.py::Test_TestRedditSemantic::testWordGetterReadLines" /><Add Test="TestRedditSemantic.py::Test_TestRedditSemantic::test_dateiterator" /></Playlist>
