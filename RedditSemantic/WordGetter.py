@@ -8,6 +8,9 @@ class WordGetter(object):
         self.wordsAndCounts = {}    
         self.tmf = TextFileManipulation()
 
+    def ResetDictionary(self):
+        self.wordsAndCounts.clear()
+
     def ReadEachLine(self, file, function = None):
         with open(file, 'r' ) as f:
             for line in f:
@@ -18,6 +21,12 @@ class WordGetter(object):
 
     def ProcessLine(self, line):
          words = str(line).replace("\n", "")
+         words = str(words).replace("\"", "")
+         words = str(words).replace("\'", "")
+         words = str(words).replace(",", "")
+         words = str(words).replace(".", "")
+         words = str(words).replace(":", "")
+         words = str(words).replace("?", "")
          for word in str(words).split(" "):
              lWord = str(word).lower()
              if lWord in self.wordsAndCounts:
@@ -29,7 +38,10 @@ class WordGetter(object):
 
     def WriteOutWordsAndCounts(self, outputFile):
         self.tmf.WriteDictLines(self.wordsAndCounts, outputFile)
-        
-        
 
+    def WriteOutWordsAndCountsKeySorted(self, outputFile):
+        self.tmf.WriteDictLinesSortedKey(self.wordsAndCounts, outputFile)
 
+    def WriteOutWordsAndCountsValueSorted(self, outputFile):
+        self.tmf.WriteDictLinesSortedValue(self.wordsAndCounts, outputFile)
+        

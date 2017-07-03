@@ -344,3 +344,6 @@ __pycache__/
 /RedditSemantic/data1.txt
 /RedditSemantic/data
 /RedditSemantic/testOutput.txt
+/RedditSemantic/WordsKeySorted.txt
+/RedditSemantic/WordsTotal.txt
+/RedditSemantic/WordsValueSorted.txt
