@@ -6,10 +6,14 @@ class WordGetter(object):
     def __init__(self, path = None):
         self.path = path  
         self.wordsAndCounts = {}    
+        self.sentances = []
         self.tmf = TextFileManipulation()
 
     def ResetDictionary(self):
         self.wordsAndCounts.clear()
+
+    def ResetSentanceList(self):
+        self.sentances.clear()
 
     def ReadEachLine(self, file, function = None):
         with open(file, 'r' ) as f:
@@ -36,6 +40,15 @@ class WordGetter(object):
              else:
                  self.wordsAndCounts[lWord] = 1
 
+    def GetLinesContainingWordList(self, file, wordList):
+        with open(file, 'r' ) as f:
+            for line in f:
+                for word in wordList:
+                    if word in line.lower():
+                        self.sentances.append(line)
+                        break 
+        
+
     def WriteOutWordsAndCounts(self, outputFile):
         self.tmf.WriteDictLines(self.wordsAndCounts, outputFile)
 
@@ -44,4 +57,7 @@ class WordGetter(object):
 
     def WriteOutWordsAndCountsValueSorted(self, outputFile):
         self.tmf.WriteDictLinesSortedValue(self.wordsAndCounts, outputFile)
+
+    def WriteOutSentances(self, outputFile):
+        self.tmf.WriteList(self.sentances, outputFile)
         

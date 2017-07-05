@@ -1,83 +1,73 @@
-import praw
-import time
-import datetime
-from RedditApiSecrets import RedditApiSecrets 
 from TextFileManipulation import TextFileManipulation
-from DateIterator import DateIterator
 from WordGetter import WordGetter
+from PrawWrapper import PrawWrapper
 
-headers = []
-
-apiSecrets = RedditApiSecrets()
-di = DateIterator()
 wg = WordGetter()
-
-# date eletion announced
-di.SetStartDateTime(2017,4,18,00)
-
-#date election ended
-di.SetEndDateTime(2017,6,9,00)
-
-
+pw = PrawWrapper()
 tfm = TextFileManipulation()
 
+# bad search terms showing too many non-related results:
+# tim - thought farron but time appears a lot
+# paul - as in nuttal too many different pauls
+
+
+searchTerms = [
+    "may", 
+    "theresa", 
+    "labour", 
+    "corbyn", 
+    "jeremy", 
+    "tory", 
+    "tories",
+    "conservative", 
+    "lib", 
+    "dem",  
+    "farron", 
+    "prime",
+    "ukip",
+    "pm",
+    "boris",
+    "johnson",
+    "diane",
+    "abbot",
+    "amber",
+    "rudd",
+    "nuttall",
+    "nutal",
+    "philip",
+    "hammond",
+    "mcdonald",
+    "blair",
+    "cameron",
+    "davies",
+    "kier",
+    "starmer"
+    ]
+
 #for i in range (1,53):
-#    tfm.RemoveFile("data\\data" + str(i) + ".txt")
+#    tfm.RemoveFile("data\\titles" + str(i) + ".txt")
 
-#reddit = praw.Reddit(client_id= apiSecrets.GetClientId(),
-#                     client_secret= apiSecrets.GetClientSecret(),
-#                     user_agent= apiSecrets.GetUserAgent())
+for i in range (1,53):
+    tfm.RemoveFile("data\\SearchedTitles" + str(i) + ".txt")
 
-#print(reddit.read_only)
+#pw.GetTitlesInElectionRange()
 
-#subreddit = reddit.subreddit('unitedkingdom')
+#wg.ResetDictionary()
 
-#print(subreddit.display_name)  
-#print(subreddit.title)         
+#for i in range(1,52,1):
+#    outputFile = "data\\titles" + str(i) + ".txt"
+#    print(outputFile)
+#    wg.ReadEachLine(outputFile)
 
-#i = 1
+#print("Writing files")
+#wg.WriteOutWordsAndCountsKeySorted("WordsKeySorted.txt")
+#wg.WriteOutWordsAndCountsValueSorted("WordsValueSorted.txt")
 
-#while di.previousDateTime < di.endDateTime:
-#    print("Start: %s/%s/%s %s:%s:%s - end: %s/%s/%s %s:%s:%s" %(
-#        di.previousDateTime.day, di.previousDateTime.month, di.previousDateTime.year, \
-#        di.previousDateTime.hour, di.previousDateTime.minute, di.previousDateTime.second,\
-#        di.nextDateTime.day, di.nextDateTime.month, di.nextDateTime.year, \
-#        di.nextDateTime.hour, di.nextDateTime.minute, di.nextDateTime.second))
-    
-#    prev,next = di.GetCurrentOneDayEpoch()
-
-#    search_str = "timestamp:" + str(int(prev)) + ".." + str(int(next))
-
-#    print(search_str)
-
-#    search_results = list(subreddit.search(search_str, syntax='cloudsearch', limit=None))
-
-#    tfm.SetFile("data\\data" + str(i) + ".txt")
-
-#    if len(search_results) > 0:
-#        print(len(search_results))
-#        for sub in search_results:
-#            headers.append(sub.title)
-            
-#    if len(search_results) > 999:
-#        print("********999*******")
-
-#    tfm.WriteLines(headers)
-
-#    headers.clear()
-
-#    i +=1
-
-#    di.IncreaseOneDay()
-
-
-wg.ResetDictionary()
 
 for i in range(1,52,1):
-    outputFile = "data\\data" + str(i) + ".txt"
-    print(outputFile)
-    wg.ReadEachLine(outputFile)
-
-print("Writing files")
-wg.WriteOutWordsAndCountsKeySorted("WordsKeySorted.txt")
-wg.WriteOutWordsAndCountsValueSorted("WordsValueSorted.txt")
+    inputFile = "data\\titles" + str(i) + ".txt"
+    of = "data\\SearchedTitles" + str(i) + ".txt"
+    print(of)
+    wg.GetLinesContainingWordList(inputFile, searchTerms)
+    wg.WriteOutSentances(of)
+    wg.ResetSentanceList()

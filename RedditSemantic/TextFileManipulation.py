@@ -89,6 +89,19 @@ class TextFileManipulation(object):
              for key, value in sorted(dict.items(), key = lambda x: x[1], reverse = True):
                 writeFile.write(str(key) + ":" + str(value) + "\n")
 
+    def WriteList(self, list, path = None):
+        filePath = path
+        if path == None:
+            filePath = self.path
+
+        if filePath == None:
+            print("No file path defined")
+            return
+
+        with open(filePath, "w") as writeFile:
+             for sentance in list:
+                writeFile.write(str(sentance))
+
 if __name__ == "__main__":
     print("This class cannot be run directly")
             

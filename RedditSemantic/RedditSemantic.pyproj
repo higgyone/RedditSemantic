@@ -25,6 +25,9 @@
     <Compile Include="DateIterator.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PrawWrapper.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TestRedditSemantic.py">
       <SubType>Code</SubType>
     </Compile>
