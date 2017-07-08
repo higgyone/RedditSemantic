@@ -11,51 +11,101 @@ tfm = TextFileManipulation()
 # paul - as in nuttal too many different pauls
 
 
-searchTerms = [
-    "may", 
+searchTerms_Labour = [
+    "labour",
+    "Labour",
+    "Corbyn", 
+    "Jeremy C",
+    "corbyn",  
+    "jeremy c",
+    "jeremy c",
+    "Jeremy C",
+    "diane",
+    "abbot",
+    "Diane",
+    "Abbot",
+    "Abbott",
+    "abbott",
+    "Mcdonald",
+    "Blair",
+    "Kier",
+    "Starmer"
+    "Emily",
+    "Thornberry"
+    ]
+
+searchTerms_LibDem = [
+    "Lib Dem", 
+    "lib dem", 
+    "liberal dem",
+    "Liberal Dem",
+    "Libs",
+    "libs", 
+    "farron", 
+    "Farron" 
+    ]
+
+searchTerms_Ukip = [
+    "ukip",
+    "UKIP",
+    "Ukip",
+    "Nuttall",
+    "Nutal",
+    "nuttall",
+    "nutal"
+    ]
+
+
+searchTerms_Tory = [
+    "May", 
     "theresa", 
-    "labour", 
-    "corbyn", 
-    "jeremy", 
+    "Theresa", 
     "tory", 
     "tories",
     "conservative", 
-    "lib", 
-    "dem",  
-    "farron", 
-    "prime",
-    "ukip",
-    "pm",
-    "boris",
-    "johnson",
-    "diane",
-    "abbot",
-    "amber",
+    "Tory", 
+    "Tories",
+    "Conservative",
+    "Prime",
+    "PM",
+    "Boris",
+    "Boris Johnson",
+    "boris johnson",
+    "boris J",
+    "Amber",
+    "Rudd",
     "rudd",
-    "nuttall",
-    "nutal",
-    "philip",
+    "Philip Hammond",
+    "philip hammond",
+    "philip Hammond",
     "hammond",
-    "mcdonald",
-    "blair",
-    "cameron",
-    "davies",
-    "kier",
-    "starmer"
+    "Hammond",
+    "Cameron",
+    "Davies"
     ]
 
-#for i in range (1,53):
-#    tfm.RemoveFile("data\\titles" + str(i) + ".txt")
+searches = {
+    "Tory" : searchTerms_Tory, 
+    "Labour" : searchTerms_Labour, 
+    "LibDems" : searchTerms_LibDem, 
+    "Ukip" : searchTerms_Ukip}
 
-for i in range (1,53):
-    tfm.RemoveFile("data\\SearchedTitles" + str(i) + ".txt")
+#for i in range (1,53):
+#    tfm.RemoveFile("data\\titles\\titles" + str(i) + ".txt")
+
+#for i in range (1,53):
+#    tfm.RemoveFile("data\\SearchedTitles" + str(i) + ".txt")
+
+for key in searches:
+    print("Deleting: " + key + ".txt")
+    tfm.RemoveFile("data\\results\\" + key + ".txt")
 
 #pw.GetTitlesInElectionRange()
 
 #wg.ResetDictionary()
 
 #for i in range(1,52,1):
-#    outputFile = "data\\titles" + str(i) + ".txt"
+#    outputFile = "data\\titles\\titles" + str(i) + ".txt"
 #    print(outputFile)
 #    wg.ReadEachLine(outputFile)
 
@@ -63,11 +113,15 @@ for i in range (1,53):
 #wg.WriteOutWordsAndCountsKeySorted("WordsKeySorted.txt")
 #wg.WriteOutWordsAndCountsValueSorted("WordsValueSorted.txt")
 
-
-for i in range(1,52,1):
-    inputFile = "data\\titles" + str(i) + ".txt"
-    of = "data\\SearchedTitles" + str(i) + ".txt"
-    print(of)
-    wg.GetLinesContainingWordList(inputFile, searchTerms)
+for key, value in searches.items():
+    print("Working on: " + key)
+    
+    for i in range(1,52,1):
+        inputFile = "data\\titles\\titles" + str(i) + ".txt"
+        of = "data\\results\\" + str(key) + ".txt"
+        wg.GetLinesContainingWordList(inputFile, value)
+    
     wg.WriteOutSentances(of)
     wg.ResetSentanceList()
+
+print("Done")

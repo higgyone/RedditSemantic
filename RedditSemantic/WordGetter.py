@@ -44,7 +44,7 @@ class WordGetter(object):
         with open(file, 'r' ) as f:
             for line in f:
                 for word in wordList:
-                    if word in line.lower():
+                    if word in line:
                         self.sentances.append(line)
                         break 
         
